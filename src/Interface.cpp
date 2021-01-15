@@ -1,7 +1,7 @@
 #include "Interface.h"
 
 char firstInteraction() {
-    std::cout << "Bonjour ! Je suis Hector. Que souhaitez-vous ?\n" << "a. Chiffrer un message en Morse\n" << "b. Déchiffrer un message\n" << "Votre réponse : ";
+    std::cout << "Bonjour ! Je suis Hector. Que souhaitez-vous ?\n" << "    a. Chiffrer un message en Morse\n" << "    b. Déchiffrer un message\n" << "Votre réponse : ";
     
     char answer;
     std::cin >> answer ;
@@ -10,7 +10,7 @@ char firstInteraction() {
 }
 
 char strOrTxt() {
-    std::cout << "Désirez-vous entrer le message vous-même, ou me le transmettre dans un fichier texte ?   a. entrée   b. texte\n" << "Votre réponse : ";
+    std::cout << "Désirez-vous entrer le message vous-même, ou me le transmettre dans un fichier texte ?\n    a. entrée\n    b. texte\n" << "Votre réponse : ";
     
     char answer;
     std::cin >> answer;
