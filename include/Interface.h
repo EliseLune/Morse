@@ -13,4 +13,8 @@ std::string msgEntry();
 
 std::string msgTxt();
 
+std::string askFileName(bool cin = false);
+
+void lastLine();
+
 #endif

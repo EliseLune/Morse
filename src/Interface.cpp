@@ -1,21 +1,35 @@
 #include "Interface.h"
 
 char firstInteraction() {
-    std::cout << "Bonjour ! Je suis Hector. Que souhaitez-vous ?\n" << "    a. Chiffrer un message en Morse\n" << "    b. Déchiffrer un message\n" << "Votre réponse : ";
+    std::cout << "Bonjour ! Je suis Hector. Que souhaitez-vous ?\n" << "    a. Chiffrer un message en Morse\n" << "    b. Déchiffrer un message\n";
     
-    char answer;
-    std::cin >> answer ;
-    std::cout << "\n";
-    return answer;
+    char answer('0');
+    while(answer!='a' && answer!='b') {
+        std::cout << "Votre réponse : ";
+        std::cin >> answer ;
+        std::cout << "\n";
+        if(answer=='a' || answer=='b') return answer;
+        else std::cout << "Réponse invalide.\n";
+    }
+    
+    std::cerr << "ERROR : AI not working at first interaction";
+    return ' ';
 }
 
 char strOrTxt() {
-    std::cout << "Désirez-vous entrer le message vous-même, ou me le transmettre dans un fichier texte ?\n    a. entrée\n    b. texte\n" << "Votre réponse : ";
+    std::cout << "Désirez-vous entrer le message vous-même, ou me le transmettre dans un fichier texte ?\n    a. saisie\n    b. texte\n";
     
-    char answer;
-    std::cin >> answer;
-    std::cout << "\n";
-    return answer;
+    char answer('0');
+    while(answer!='a' && answer!='b') {
+        std::cout << "Votre réponse : ";
+        std::cin >> answer ;
+        std::cout << "\n";
+        if(answer=='a' || answer=='b') return answer;
+        else std::cout << "Réponse invalide.\n";
+    }
+    
+    std::cerr << "ERROR : AI not working at second interaction";
+    return ' ';
 }
 
 std::string msgEntry() {
@@ -28,7 +42,7 @@ std::string msgEntry() {
 }
 
 std::string msgTxt() {
-    std::cout << "Veuillez entrer l'emplacement de votre fichier (sous forme \"dossier/nom.txt\")\n";
+    std::cout << "Veuillez saisir l'emplacement de votre fichier (sous forme \"dossier/nom.txt\")\n";
     std::string answer, temp, message("");
     std::cin >> answer;
     std::cout << "\n";
@@ -39,4 +53,16 @@ std::string msgTxt() {
     }
     file.close();
     return message;
+}
+
+std::string askFileName(bool cin) {
+    std::cout << "Veuillez saisir le nom du fichier WAV souhaité (sous la forme \"dossier/nom.wav\")\n";
+    std::string answer;
+    if(cin) std::cin.ignore();
+    getline(std::cin, answer);
+    return answer;
+}
+
+void lastLine() {
+    std::cout << "Ce fut un plaisir de travailler avec vous. Bonne journée !\n";
 }
