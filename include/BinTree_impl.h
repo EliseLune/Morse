@@ -65,10 +65,11 @@ template <typename T>
 T BinTree<T>::decode(std::string const morsChar) const {
     int index(0), i(0);
     while(i < (int)morsChar.size()) {
-        if(morsChar[i]=='.') //dit
+        if(morsChar[i]=='.') //dit = fils gauche
             index = 2*index+1;
-        else //daah
+        else if(morsChar[i]=='-')//daah = fils droit
             index = 2*index+2;
+        else throw std::invalid_argument("In BinTree::decode, unknown character to the morse alphabet -> "+morsChar[i]); //ERREUR : le std::string ne contient pas que des . et des -
         i++;
     }
     return table_[index];
@@ -83,28 +84,22 @@ std::string BinTree<T>::encode(T const elem) const {
         index++;
     
     std::string morsChar("");
-    try {
-        if(index == this->getSize())
-            throw index; //caractère introuvé
-        else {
-            //Ecriture du code morse comme en binaire, avec 0 = . ; 1 = -
-            int remain;
-            while(index > 0) {
-                remain = index%2;
-                if(remain==0) {
-                    morsChar = "-" + morsChar;
-                    index = (index-2)/2;
-                }
-                else {
-                    morsChar = "." + morsChar;
-                    index /= 2;
-                }
+    if(index == this->getSize())
+        throw std::out_of_range("In BinTree::encode, unavailable character (I can't translate it in morse)"); //ERREUR : caractère introuvé
+    else {
+        //Ecriture du code morse comme en binaire, avec 0 = . ; 1 = -
+        int remain;
+        while(index > 0) {
+            remain = index%2;
+            if(remain==0) {
+                morsChar = "-" + morsChar;
+                index = (index-2)/2;
             }
-            return morsChar;
+            else {
+                morsChar = "." + morsChar;
+                index /= 2;
+            }
         }
-    }
-    catch(int e) {
-        std::cout << "ERROR : Unavailable character\n";
-        return "";
+        return morsChar;
     }
 }

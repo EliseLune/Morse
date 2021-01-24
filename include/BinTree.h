@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <stdexcept>
 
 template <typename T>
 class BinTree {
@@ -24,11 +25,11 @@ class BinTree {
             //remplace tous les éléments par elem
         void print() const;
         
-        /*-------Décodage morse -> caractère-------*/
+        /*------ Décodage morse -> caractère ------*/
         /*ie trouver étiquette d'une feuille à partir d'un emplacement*/
         T decode(std::string const morsChar) const;
         
-        /*-----Encodage caractère -> morse-----*/
+        /*---- Encodage caractère -> morse ----*/
         /*ie trouver le caractère et retouner son emplacement, ie l'écriture en binaire de son indice*/
         std::string encode(T const elem) const;
 };

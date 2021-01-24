@@ -1,68 +1,72 @@
 #include "Interface.h"
 
+char AorB() {
+    std::string answer("");
+    while(answer!="a" && answer!="b" && answer!="A" && answer!="B") {
+        std::cout << "Votre réponse : ";
+        getline(std::cin, answer);
+        std::cout << "\n";
+        if(answer=="a" || answer=="b" || answer=="A" || answer=="B") {
+            return (char)tolower(answer[0]);
+        }
+        else std::cout << "Réponse invalide\n";
+    }
+    throw std::runtime_error("In AorB, interrupted dialogue ...\n");
+    return ' ';
+}
+
 char firstInteraction() {
-    std::cout << "Bonjour ! Je suis Hector. Que souhaitez-vous ?\n" << "    a. Chiffrer un message en Morse\n" << "    b. Déchiffrer un message\n";
+    std::cout << "Bonjour ! Je suis Hector. Que souhaitez-vous faire ?\n" << "    a. Chiffrer un message en Morse\n" << "    b. Déchiffrer un message\n";
     
-    char answer('0');
-    while(answer!='a' && answer!='b') {
-        std::cout << "Votre réponse : ";
-        std::cin >> answer ;
-        std::cout << "\n";
-        if(answer=='a' || answer=='b') return answer;
-        else std::cout << "Réponse invalide.\n";
-    }
-    
-    std::cerr << "ERROR : AI not working at first interaction";
-    return ' ';
+    return AorB();
 }
 
-char strOrTxt() {
-    std::cout << "Désirez-vous entrer le message vous-même, ou me le transmettre dans un fichier texte ?\n    a. saisie\n    b. texte\n";
+char strOrTxt(bool const encode) {
+    if(encode)
+        std::cout << "Désirez-vous entrer le message vous-même, ou me le transmettre dans un fichier texte ?\n    a. saisie\n    b. fichier texte\n";
+    else
+        std::cout << "Désirez-vous que j'affiche le message en clair directement ici, ou que je vous le sauvegarde dans un fichier texte ?\n    a. ici\n    b. fichier texte\n";
     
-    char answer('0');
-    while(answer!='a' && answer!='b') {
-        std::cout << "Votre réponse : ";
-        std::cin >> answer ;
-        std::cout << "\n";
-        if(answer=='a' || answer=='b') return answer;
-        else std::cout << "Réponse invalide.\n";
-    }
-    
-    std::cerr << "ERROR : AI not working at second interaction";
-    return ' ';
+    return AorB();
 }
 
-std::string msgEntry() {
+std::string askFileName(std::string const extension) {
+    std::cout << "Veuillez saisir le nom de votre fichier ." << extension << " (sous forme \"dossier/nom." << extension << "\")\n";
+    std::string answer;
+    getline(std::cin, answer);
+    std::cout << "\n";
+    return answer;
+}
+
+std::string readEntry() {
     std::cout << "Veuillez entrer votre message :\n";
     std::string answer;
-    std::cin.ignore();
     getline(std::cin,answer);
     std::cout << "\n";
     return answer;
 }
 
-std::string msgTxt() {
-    std::cout << "Veuillez saisir l'emplacement de votre fichier (sous forme \"dossier/nom.txt\")\n";
-    std::string answer, temp, message("");
-    std::cin >> answer;
-    std::cout << "\n";
-    
-    std::ifstream file(answer.c_str());
+std::string readTxt(std::string const txtName) {
+    std::string message(""), temp;
+    std::ifstream file(txtName.c_str());
     while(getline(file,temp)) {
-        message += temp;
+        message += temp + " ";
     }
     file.close();
     return message;
 }
 
-std::string askFileName(bool cin) {
-    std::cout << "Veuillez saisir le nom du fichier WAV souhaité (sous la forme \"dossier/nom.wav\")\n";
-    std::string answer;
-    if(cin) std::cin.ignore();
-    getline(std::cin, answer);
-    return answer;
+void writeStr(std::string const message) {
+    std::cout << "\n#------------MESSAGE------------#\n\n" << message << "\n\n#--------FIN DU MESSAGE---------#\n\n";
+}
+
+void writeTxt(std::string const txtName, std::string const message) {
+    std::ofstream file(txtName.c_str());
+    file << message;
+    file.close();
+    std::cout << "Fichier texte créé !\n";
 }
 
 void lastLine() {
-    std::cout << "Ce fut un plaisir de travailler avec vous. Bonne journée !\n";
+    std::cout << "\nCe fut un plaisir de travailler avec vous. Bonne journée !\n\n";
 }

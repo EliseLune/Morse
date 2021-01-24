@@ -16,8 +16,14 @@ std::string encrypt(BinTree<char> const& keyTree, std::string const phrase) {
             final += keyTree.encode(temp);
         else if(temp==' ')
             final += '/';
-        if(i<final.size()-1)
+        if(i<phrase.size()-1)
             final += ' ';
+        /*if(temp==' ')
+            final += '/';
+        else
+            final += keyTree.encode(temp);
+        if(i<phrase.size()-1)
+            final += ' ';*/
     }
     return final;
 }

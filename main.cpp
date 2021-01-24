@@ -3,36 +3,58 @@
 #include "Wave.h"
 
 int main() {
-    BinTree<char> keyTree(6);
-    initTree(keyTree);
-    
-    char choice1(firstInteraction());
-    //a = encoder ; b = décoder
-    if(choice1=='a') {
-        std::string message, morse, fileName;
-        char choice2(strOrTxt()); //a = entrée ; b = txt
-        if(choice2=='a') {
-            message = msgEntry();
-            fileName = askFileName();
+    try {
+        BinTree<char> keyTree(6);
+        initTree(keyTree);
+        
+        char choice1(firstInteraction()), choice2;
+        std::string message, morse, wavName;
+        //a = encoder ; b = décoder
+        if(choice1=='a') {
+            choice2 = strOrTxt(true); //a = entrée ; b = txt
+            if(choice2=='a')
+                message = readEntry();
+            else
+                message = readTxt(askFileName("txt"));
+            morse = encrypt(keyTree, message);
+            wavName = askFileName("wav");
+            OutWav crypted(wavName);
+            crypted.write(morse);
         }
         else {
-            message = msgTxt();
-            fileName = askFileName(true);
+            //Entrée = audio ; sortie = string
+            wavName = askFileName("wav");
+            InWav crypted(wavName);
+            morse = crypted.read();
+            message = decrypt(keyTree, morse);
+            choice2 = strOrTxt(false);
+            if(choice2=='a')
+                writeStr(message);
+            else
+                writeTxt(askFileName("txt"), message);
         }
-        morse = encrypt(keyTree, message);
-        OutWav crypted(fileName);
-        crypted.write(morse);
-        std::cout << "\n" << morse << "\n" << decrypt(keyTree, morse) << "\n\n";
+        
+        lastLine();
     }
-    else {
-        //Entrée = audio ; sortie = string
+    catch(std::exception const& e) {
+        std::cerr << "ERROR : " << e.what() << "\n";
     }
-    
-    lastLine();
-    
     //TEST WAVE.H
-    /*OutWav f("tests/ex1.wav");
-    f.write("... --- ... / .--. .-.. . .- ... . / .... . .-.. .--.");*/
+    /*InWav f("tests/test.wav");
+    //f.testing();
+    std::string morse;
+    try {
+        morse = (f.read());
+        std::cout << decrypt(keyTree, morse) << "\n";
+    }
+    catch (int n) {
+        std::cerr << "ERROR : durée du son incohérente à la " << n << "e itération\n";
+    }
+    catch (std::string e) {
+        std::cerr << "Message décodé jusqu'ici : " << e << "\n";
+    }
+    std::string morse(f.read());
+    std::cout << morse << "\n" << decrypt(keyTree, morse) << "\n";*/
     
     return 0;
 }
