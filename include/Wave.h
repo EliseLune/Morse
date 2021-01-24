@@ -68,17 +68,17 @@ class InWav : public Wave {
         static constexpr int epsVolume = (int)amplitude / 100; //seuil en-dessous duquel on compte le volume comme nul
         
         std::ifstream file_;
-        int epsTime_; //sons de durée plus courte : négligés
+        int epsTime_; //sons et silences de durée plus courte : négligés
         int minUnit_; //la plus petite unité de temps possible
         
-        int readWord(int size);
-        void setBlanks(std::vector<std::streampos>& tab);
-        void setUnit(std::vector<std::streampos> const& tab);
+        int readWord(int size) ; //lit dans file_ 'size' caractères et retourne l'entier (relatif) correspondant
+        void setBlanks(std::vector<std::streampos>& tab) ; //modifie le vector pour y inscrire les positions de début et de fin des silences du fichier file_ (sans prendre en compte les sons courts parasites ou silences courts présents dans les sinusoïdes par exemple)
+        void setUnit(std::vector<std::streampos> const& tab); //lit le vector pour prendre la durée de son minimale du fichier
     public:
         InWav(std::string fileName);
         ~InWav();
-        void testing();
-        std::string read();
+        void testing() const ; //affiche les données de file_ (+ les data si on décommente la section associée)
+        std::string read(); //parcourt un vector créé au préalable et interprête les longueurs des sons et des silences
 };
 
 #endif

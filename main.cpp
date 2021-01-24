@@ -39,22 +39,6 @@ int main() {
     catch(std::exception const& e) {
         std::cerr << "ERROR : " << e.what() << "\n";
     }
-    //TEST WAVE.H
-    /*InWav f("tests/test.wav");
-    //f.testing();
-    std::string morse;
-    try {
-        morse = (f.read());
-        std::cout << decrypt(keyTree, morse) << "\n";
-    }
-    catch (int n) {
-        std::cerr << "ERROR : durée du son incohérente à la " << n << "e itération\n";
-    }
-    catch (std::string e) {
-        std::cerr << "Message décodé jusqu'ici : " << e << "\n";
-    }
-    std::string morse(f.read());
-    std::cout << morse << "\n" << decrypt(keyTree, morse) << "\n";*/
     
     return 0;
 }

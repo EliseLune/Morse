@@ -6,22 +6,31 @@
 #include <string>
 #include <stdexcept>
 
-char AorB(); //dialogue lors d'un choix de l'utilisateur parmi 2 options
+//Dialogue lors d'un choix de l'utilisateur parmi 2 options
+char AorB();
 
-char firstInteraction(); //coder en morse ou décrypter un audio ?
+//Coder en morse ou décrypter un audio ?
+char firstInteraction();
 
-char strOrTxt(bool const encode); //terminal ou fichier texte ?
+//Terminal ou fichier texte ?
+char strOrTxt(bool const encode);
 
-std::string askFileName(std::string const extension); //dialogue lorsque l'utilisateur entre un nom de fichier, wav ou txt
+//Dialogue lorsque l'utilisateur entre un nom de fichier, wav ou txt
+std::string askFileName(std::string const extension);
 
-std::string readEntry(); //entrée dans le terminal le message à encoder
+//Entrée dans le terminal du message à encoder
+std::string readEntry();
 
-std::string readTxt(std::string const txtName); //lecture du message dans un fichier texte
+//Lecture du message dans un fichier texte
+std::string readTxt(std::string const txtName);
 
-void writeStr(std::string const message); //affichage dans le terminal du message en clair
+//Affichage dans le terminal du message en clair
+void writeStr(std::string const message);
 
-void writeTxt(std::string const txtName, std::string const message); //écriture du message dans un fichier texte
+//Ecriture du message dans un fichier texte
+void writeTxt(std::string const txtName, std::string const message);
 
-void lastLine(); //petit message d'adieu
+//Petit message d'adieu
+void lastLine();
 
 #endif

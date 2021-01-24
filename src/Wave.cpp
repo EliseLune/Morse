@@ -70,7 +70,7 @@ void OutWav::wHeader() {
 void OutWav::wData(std::string const morse) {
     file_ << "data----";
     fileSize_ += 8;
-    this->writeSound(unit_);
+    this->writeSound(unit_); //un silence au début
     for(char e: morse) {
         this->writeSign(e);
     }
@@ -104,7 +104,7 @@ int InWav::readWord(int size) {
     }
     int sign(value >> (8*size-1));
     value -= sign*(int)pow(2, 8*size-1);
-    if(sign) value =-value;
+    if(sign) value =-value; //lecture d'un entier relatif -> gestion du signe (bit de poids le plus fort)
     return value;
 }
 
@@ -125,7 +125,6 @@ InWav::InWav(std::string fileName) : minUnit_(-1) {
     dataSize_ = this->readWord(4);
     
     epsTime_ = sampPerSec_ / 1750;
-    //epsTime_ = 5;
 }
 
 InWav::~InWav() {
@@ -133,7 +132,7 @@ InWav::~InWav() {
         file_.close();
 }
 
-void InWav::testing() {
+void InWav::testing() const {
     std::cout << "FileSize = " << fileSize_ << "\n";
     std::cout << "AudioFormat = " << audioFormat_ << "\n";
     std::cout << "NbrChannels = " << nbrChannels_ << "\n";
@@ -151,21 +150,19 @@ void InWav::testing() {
     std::cout << "\n";*/
 }
 
-
-//faire un vecteur repérant les positions de début et de fin des silences (on ne garde que ceux qui sont supérieurs à un epsTime)
 void InWav::setBlanks(std::vector<std::streampos>& tab) {
-    const int totSamp(dataSize_ / bitsPerSamp_ * 8);
+    const int totSamp(dataSize_ / bitsPerSamp_ * 8); //nombre total d'échantillons à lire
     int value;
-    bool silence(true), test;
+    bool silence(true), test; //'silence' = échantillons lus liés à un silence ou à un son
     file_.seekg(44, std::ios::beg);
     std::streampos begin(file_.tellg()), end(file_.tellg());
     for(int n=0; n<totSamp; n++) {
         value = this->readWord(bitsPerSamp_ /8);
-        test = (value <= epsVolume && value >= -epsVolume);
-        if(silence && !test) {
+        test = (value <= epsVolume && value >= -epsVolume); //si son perçu négligeable, considèré comme un silence
+        if(silence && !test) { //si nous lisions un silence et percevons un son
             silence = false;
             end = file_.tellg();
-            if(n < epsTime_ || epsTime_ < end-begin) {
+            if(n < epsTime_ || epsTime_ < end-begin) { //si silence non négligeable ou son perçu dès le début du fichier
                 tab.push_back(begin);
                 tab.push_back(end);
             }
@@ -174,12 +171,12 @@ void InWav::setBlanks(std::vector<std::streampos>& tab) {
             silence = true;
             if(epsTime_ < file_.tellg()-end) 
                 begin = file_.tellg();
-            else {
+            else { //son négligeable, il faut donc continuer le silence précédent
                 tab.pop_back();
                 tab.pop_back();
             }
         }
-        if(n > totSamp-epsTime_) {
+        if(n > totSamp-epsTime_) { //correction des effets de bord -> dernier son
             tab.push_back(file_.tellg());
             tab.push_back(file_.tellg());
             break;
@@ -205,13 +202,13 @@ std::string InWav::read() {
     std::string morse("");
     for(unsigned int i=0; i<silences.size()-1; i++) {
         timeSpan = silences[i+1] - silences[i];
-        if(i%2==0) {
+        if(i%2==0) { //silence
             if(3*minUnit_ <= timeSpan && timeSpan <= 6*minUnit_)
                 morse += " ";
             else if(timeSpan > 6*minUnit_)
                 morse += " / ";
         }
-        else {
+        else { //son
             if(minUnit_ <= 2*timeSpan && timeSpan < 2*minUnit_)
                 morse += ".";
             else

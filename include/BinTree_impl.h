@@ -1,5 +1,9 @@
 #include "BinTree.h"
 
+/*--------------------------------------------------------*/
+/*--------------- Implémentation générale ----------------*/
+/*--------------------------------------------------------*/
+
 //Constructeur
 template <typename T>
 BinTree<T>::BinTree(int n) : depth_(n) {
@@ -60,7 +64,10 @@ void BinTree<T>::print() const {
     }
 }
 
-/*------------Décodage--------------*/
+/*--------------------------------------------------------*/
+/*----------------------- Décodage -----------------------*/
+/*--------------------------------------------------------*/
+
 template <typename T>
 T BinTree<T>::decode(std::string const morsChar) const {
     int index(0), i(0);
@@ -75,7 +82,10 @@ T BinTree<T>::decode(std::string const morsChar) const {
     return table_[index];
 }
 
-/*------------Encodage------------*/
+/*--------------------------------------------------------*/
+/*----------------------- Encodage -----------------------*/
+/*--------------------------------------------------------*/
+
 template <typename T>
 std::string BinTree<T>::encode(T const elem) const {
     //Recherche du caractère dans l'arbre, par profondeur croissante

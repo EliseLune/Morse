@@ -1,0 +1,6 @@
+build/Interface.o
+morse
+build/MorsCode.o
+build/Wave.o
+libmorse.a
+alphaMors.txt

@@ -25,7 +25,7 @@ char strOrTxt(bool const encode) {
     if(encode)
         std::cout << "Désirez-vous entrer le message vous-même, ou me le transmettre dans un fichier texte ?\n    a. saisie\n    b. fichier texte\n";
     else
-        std::cout << "Désirez-vous que j'affiche le message en clair directement ici, ou que je vous le sauvegarde dans un fichier texte ?\n    a. ici\n    b. fichier texte\n";
+        std::cout << "Désirez-vous que j'affiche le message en clair directement ici, ou que que je vous le sauvegarde dans un fichier texte ?\n    a. ici\n    b. fichier texte\n";
     
     return AorB();
 }
@@ -57,7 +57,7 @@ std::string readTxt(std::string const txtName) {
 }
 
 void writeStr(std::string const message) {
-    std::cout << "\n#------------MESSAGE------------#\n\n" << message << "\n\n#--------FIN DU MESSAGE---------#\n\n";
+    std::cout << "\n#----------- MESSAGE -----------#\n\n" << message << "\n\n#------- FIN DU MESSAGE --------#\n\n";
 }
 
 void writeTxt(std::string const txtName, std::string const message) {
