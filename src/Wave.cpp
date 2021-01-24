@@ -74,9 +74,13 @@ void OutWav::wData(std::string const morse) {
     for(char e: morse) {
         this->writeSign(e);
     }
+    this->writeSound(unit_);
 }
 
 void OutWav::wSize() {
+    /*file_.seekp(std::ios::end);
+    fileSize_ = (int)file_.tellp() - 8;
+    dataSize_ = (int)file_.tellp() - 44;*/
     file_.seekp(std::ios::beg + 4);
     this->writeWord(fileSize_, 4);
     fileSize_ -= 4;
@@ -176,8 +180,8 @@ void InWav::setBlanks(std::vector<std::streampos>& tab) {
                 tab.pop_back();
             }
         }
-        if(n > totSamp-epsTime_) { //correction des effets de bord -> dernier son
-            tab.push_back(file_.tellg());
+        if(n > totSamp-epsTime_) { //correction (a minima) des effets de bord -> dernier son
+            tab.push_back(begin);
             tab.push_back(file_.tellg());
             break;
         }
@@ -209,7 +213,7 @@ std::string InWav::read() {
                 morse += " / ";
         }
         else { //son
-            if(minUnit_ <= 2*timeSpan && timeSpan < 2*minUnit_)
+            if(timeSpan < 3*minUnit_)
                 morse += ".";
             else
                 morse += "-";

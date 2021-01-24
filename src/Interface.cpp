@@ -9,7 +9,7 @@ char AorB() {
         if(answer=="a" || answer=="b" || answer=="A" || answer=="B") {
             return (char)tolower(answer[0]);
         }
-        else std::cout << "Réponse invalide\n";
+        else std::cout << "    Réponse invalide\n";
     }
     throw std::runtime_error("In AorB, interrupted dialogue ...\n");
     return ' ';

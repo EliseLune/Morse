@@ -1,0 +1,19 @@
+test1.wav :
+bonjour ! je suis elise, enchantee.
+
+test2.wav :
+j'espere que mon interface vous plait. hector serait inconsolable sinon.
+
+test3.wav :
+lorem ipsum dolor sit amet, consectetur adipiscing elit.
+etiam cursus erat nec nibh sollicitudin tempor.
+phasellus auctor, erat molestie consectetur rutrum, erat urna lobortis nulla, sed cursus nisl justo eu sem.
+
+test4.wav :
+je ne sais si le mot piche vous parle, mais sachez que ce ne sont la que de petites droleries, representant un certain esprit, tres particulier a un etage de la meuh.
+
+test5.wav :
+c'est la danse des canards
+qui en sortant de la mare
+se secouent le bas des reins
+et font coin-coin.
