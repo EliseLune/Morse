@@ -78,9 +78,6 @@ void OutWav::wData(std::string const morse) {
 }
 
 void OutWav::wSize() {
-    /*file_.seekp(std::ios::end);
-    fileSize_ = (int)file_.tellp() - 8;
-    dataSize_ = (int)file_.tellp() - 44;*/
     file_.seekp(std::ios::beg + 4);
     this->writeWord(fileSize_, 4);
     fileSize_ -= 4;
